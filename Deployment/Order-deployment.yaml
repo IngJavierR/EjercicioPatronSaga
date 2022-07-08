@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-pod
+  template:
+    metadata:
+      labels:
+        app: order-pod
+    spec:
+      containers:
+      - name: order-container
+        image: ingjavierr/order-service:v1
+        ports:
+        - containerPort: 8100
+        imagePullPolicy: Always
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: qa
+        - name: TZ
+          value: America/Mexico_City
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: database
+              key: POSTGRES_USER
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: database
+              key: POSTGRES_PASSWORD
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: database
+              key: POSTGRES_DB
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-svc
+spec:
+  selector:
+    app: order-pod
+  ports:
+  - port: 8100
+    protocol: TCP
+    targetPort: 8100
+  type: LoadBalancer

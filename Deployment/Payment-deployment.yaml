@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payment-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: payment-pod
+  template:
+    metadata:
+      labels:
+        app: payment-pod
+    spec:
+      containers:
+      - name: payment-container
+        image: ingjavierr/payment-service:v1
+        ports:
+        - containerPort: 8300
+        imagePullPolicy: Always
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: qa
+        - name: TZ
+          value: America/Mexico_City
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: database
+              key: POSTGRES_USER
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: database
+              key: POSTGRES_PASSWORD
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: database
+              key: POSTGRES_DB
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: payment-svc
+spec:
+  selector:
+    app: payment-pod
+  ports:
+  - port: 8300
+    protocol: TCP
+    targetPort: 8300
+  type: ClusterIP

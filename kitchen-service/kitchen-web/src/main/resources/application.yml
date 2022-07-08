@@ -16,8 +16,8 @@ spring:
 server:
   port: 8200
 
-KAFKA_BOOSTRAPADDRESS: localhost:9192
-GROUPID: order
+KAFKA_BOOSTRAPADDRESS: kafka-service.default.svc.cluster.local:9192
+GROUPID: kitchen
 
 eureka:
   client:
