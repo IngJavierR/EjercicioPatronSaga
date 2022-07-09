@@ -2,6 +2,8 @@ package mx.com.example.web.rest;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import mx.com.example.commons.to.OrderEventTO;
+import mx.com.example.commons.to.OrderTO;
 import mx.com.example.commons.to.UserTO;
 import mx.com.example.services.facade.IOrderFacade;
 import org.apache.logging.log4j.LogManager;
@@ -25,6 +27,12 @@ public class HelloController {
 
     @Autowired
     IOrderFacade IOrderFacade;
+
+    @RequestMapping(value = "/orders", method = RequestMethod.POST)
+    public ResponseEntity create(@RequestBody OrderTO order) {
+        OrderEventTO event = IOrderFacade.createOrder(order);
+        return new ResponseEntity(event, HttpStatus.CREATED);
+    }
 
     @GetMapping(value = "/users", produces = "application/json")
     @ApiOperation(value = "Buscar Usuarios",
