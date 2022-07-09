@@ -37,23 +37,10 @@ public class KitchenFacade implements IKitchenFacade {
         Date date = new Date();
 
         KitchenDO kitchenDO = new KitchenDO();
-        kitchenDO.setDatetime(date);
-        kitchenDO.setUuid(order.getUuid());
-        kitchenDO.setDescription(order.getDescription());
-        kitchenDO.setStatus("CREATE_PENDING");
-        kitchenDAO.save(kitchenDO);
+        
 
         TicketEventTO ticketEvent = new TicketEventTO();
-        ticketEvent.setDescription(order.getDescription());
-        ticketEvent.setQuantity(order.getQuantity());
-        ticketEvent.setDateTime(date);
-        ticketEvent.setUuid(order.getUuid());
-        ticketEvent.setPrice(500);
-        if(order.getQuantity() > 10) {
-            ticketEvent.setStatus(0);
-        }else{
-            ticketEvent.setStatus(1);
-        }
+        
 
         //kafkaTemplate.send("ticket_events", ticketEvent);
         return ticketEvent;
@@ -61,10 +48,6 @@ public class KitchenFacade implements IKitchenFacade {
 
     @Override
     public void approveTicket(PaymentEventTO payment) {
-        if(payment.getStatus() == 1){
-            kitchenDAO.setStatusForKitchenDO("CREATED", payment.getUuid());
-        }else{
-            kitchenDAO.setStatusForKitchenDO("REJECTED", payment.getUuid());
-        }
+        
     }
 }

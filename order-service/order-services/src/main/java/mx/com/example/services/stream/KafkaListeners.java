@@ -30,6 +30,6 @@ public class KafkaListeners {
         LOG.info("Time" + payment.getDateTime());
         LOG.info("Status" + payment.getStatus());
 
-        orderFacade.approveOrder(payment);
+        // orderFacade.approveOrder(payment);
     }
 }

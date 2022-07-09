@@ -4,7 +4,7 @@ metadata:
   name: ingress-services
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
-    nginx.ingress.kubernetes.io/auth-url: "http://$host/oauth2/auth"
+    # nginx.ingress.kubernetes.io/auth-url: "http://$host/oauth2/auth"
     #If you need services redirect to login on fail, uncomment this line
     #nginx.ingress.kubernetes.io/auth-signin: "http://$host/oauth2/start?rd=$escaped_request_uri"
     nginx.ingress.kubernetes.io/auth-response-headers: "x-auth-request-user, x-auth-request-email, authorization"
@@ -15,9 +15,9 @@ spec:
       paths:
       - backend:
           service:
-            name: serviceone
+            name: order-svc
             port:
-              number: 8090
+              number: 8100
         path: /v1/service(/|$)(.*)
         pathType: Prefix
   ingressClassName: nginx

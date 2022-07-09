@@ -6,7 +6,7 @@
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd"> 
     <changeSet author="authorName" id="changelog-0001">
         <createTable tableName="kitchen">
-            <column name="ID" type="INT">
+            <column name="ID" type="INT" autoIncrement="true">
                 <constraints nullable="true" primaryKey="true" unique="false"/>
             </column>
             <column name="uuid" type="VARCHAR(50)">
@@ -25,7 +25,7 @@
     </changeSet>
     <changeSet author="authorName" id="changelog-0002">
         <createTable tableName="orders">
-            <column name="ID" type="INT">
+            <column name="ID" type="INT" autoIncrement="true">
                 <constraints nullable="true" primaryKey="true" unique="false"/>
             </column>
             <column name="uuid" type="VARCHAR(50)">
