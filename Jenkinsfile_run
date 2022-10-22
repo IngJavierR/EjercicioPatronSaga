@@ -8,7 +8,7 @@ pipeline {
         stage('Kubeconfig') {
             steps {
                 withCredentials([file(credentialsId: 'LOCALCONFIG', variable: 'LOCALCONFIG')]) {
-                    sh 'kubectl --kubeconfig $LOCALCONFIG get pods'
+                    sh 'kubectl --kubeconfig=$LOCALCONFIG --context=docker-desktop get pods'
                 }
             }
         }
