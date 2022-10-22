@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://database-svc.default.svc.cluster.local:5432/microservicio
-    username: postgres
-    password: project123
+    url: jdbc:postgresql://database-svc.default.svc.cluster.local:5432/${POSTGRES_DB}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
     driver-class-name: org.postgresql.Driver
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL9Dialect

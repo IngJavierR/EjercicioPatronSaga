@@ -19,7 +19,7 @@ public class KafkaListeners {
     @Autowired
     private IKitchenFacade kitchenFacade;
     
-    // @KafkaListener(topics = "order_events", groupId = "kitchen")
+    @KafkaListener(topics = "order_events", groupId = "kitchen")
     public void orderEvents(String message) throws JsonProcessingException {
 
         OrderEventTO order = new ObjectMapper().readValue(message, OrderEventTO.class);
@@ -30,10 +30,10 @@ public class KafkaListeners {
         LOG.info("Quantity" + order.getQuantity());
         LOG.info("Time" + order.getDateTime());
 
-        // kitchenFacade.createTicket(order);
+        kitchenFacade.createTicket(order);
     }
 
-    //@KafkaListener(topics = "payment_events", groupId = "kitchen")
+    @KafkaListener(topics = "payment_events", groupId = "kitchen")
     public void paymentEvents(String message) throws JsonProcessingException {
 
         PaymentEventTO payment = new ObjectMapper().readValue(message, PaymentEventTO.class);
@@ -45,6 +45,6 @@ public class KafkaListeners {
         LOG.info("Time" + payment.getDateTime());
         LOG.info("Status" + payment.getStatus());
 
-        // kitchenFacade.approveTicket(payment);
+        kitchenFacade.approveTicket(payment);
     }
 }

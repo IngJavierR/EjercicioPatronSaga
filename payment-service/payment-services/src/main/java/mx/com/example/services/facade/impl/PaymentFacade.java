@@ -27,9 +27,13 @@ public class PaymentFacade implements IPaymentFacade {
     public PaymentEventTO authorizeCard(TicketEventTO ticketEvent) {
 
         PaymentEventTO paymentEvent = new PaymentEventTO();
-        
+        paymentEvent.setDescription(ticketEvent.getDescription());
+        paymentEvent.setDateTime(ticketEvent.getDateTime());
+        paymentEvent.setUuid(ticketEvent.getUuid());
+        paymentEvent.setComfirmCode("RF90");
+        paymentEvent.setStatus(1);
 
-        // kafkaTemplate.send("payment_events", paymentEvent);
+        kafkaTemplate.send("payment_events", paymentEvent);
         return paymentEvent;
     }
 }

@@ -1,0 +1,65 @@
+pipeline {
+    agent any
+    tools {
+        maven 'M3_8_6'
+    }
+    stages {
+        
+        stage('Ingress') {
+            steps {
+                dir("Deployment/"){
+                    sh 'kubectl delete -f nginx_ingress_services.yaml'
+                }
+            }
+        }
+
+        stage('Orders') {
+            steps {
+                dir("Deployment/"){
+                    sh 'kubectl delete -f Order-deployment.yaml'
+                }
+            }
+        }
+
+        stage('Kitchen') {
+            steps {
+                dir("Deployment/"){
+                    sh 'kubectl delete -f Kitchen-deployment.yaml'
+                }
+            }
+        }
+
+        stage('Payment') {
+            steps {
+                dir("Deployment/"){
+                    sh 'kubectl delete -f Payment-deployment.yaml'
+                }
+            }
+        }
+
+        stage('Kafka') {
+            steps {
+                dir("Deployment/"){
+                    sh 'kubectl delete -f Kafka-deployment.yaml'
+                }
+            }
+        }
+
+        stage('Database') {
+            steps {
+                dir("Deployment/"){
+                    sh 'kubectl delete -f database-deployment.yaml'
+                }
+            }
+        }
+
+        stage('Secrets') {
+            steps {
+                dir("Deployment/"){
+                    sh 'kubectl delete -f secrets.yaml'
+                }
+            }
+        }
+
+    }
+}
