@@ -77,8 +77,10 @@ pipeline {
 
         stage('Kubeconfig') {
             steps {
-                withCredentials([file(credentialsId: 'LOCALCONFIG', variable: 'LOCALCONFIG')]) {
-                    sh 'kubectl --kubeconfig=$LOCALCONFIG --context=docker-desktop delete -f ingress-deploy.yaml'
+                dir("Deployment/"){
+                    withCredentials([file(credentialsId: 'LOCALCONFIG', variable: 'LOCALCONFIG')]) {
+                        sh 'kubectl --kubeconfig=$LOCALCONFIG --context=docker-desktop delete -f ingress-deploy.yaml'
+                    }
                 }
             }
         }

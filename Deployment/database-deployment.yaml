@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: database-container
-        image: postgres:11
+        image: postgres:13
         ports:
         - containerPort: 5432
         imagePullPolicy: Always
